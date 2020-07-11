@@ -2,8 +2,10 @@
 A java spring REST API template for a quick start
 
 Returns a response based on endpoint:
-1) "/api/appProp/" - string created from application.properties.
-2) "/api/h2Entities/" - some H2 DB sample entities created
+1) "/api/sampleString/" - generic string.
+2) "/api/appProp/" - string created from application.properties.
+3) "/api/h2Entities/" - some H2 DB sample entities created
+4) get by id, post, delete by id
 
 pom.xml dependencies includes:
 1) actuator (some free endpoints for system description)

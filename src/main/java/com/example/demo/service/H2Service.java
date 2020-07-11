@@ -11,9 +11,9 @@ public interface H2Service {
 
     public List<H2Entity> findAll();
 
-    public Optional<H2Entity> findById(Long theId);
+    public Optional<H2Entity> findById(Integer theId);
 
     public void save(H2Entity theEntity);
 
-    public void deleteById(Long theId);
+    public void deleteById(Integer theId);
 }

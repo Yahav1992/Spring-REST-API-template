@@ -25,33 +25,33 @@ public class HomeController {
     }
 
     @GetMapping("/sampleString")
-    public String testPage1() {
+    public String sampleString() {
         return "test-main-menu";
     }
 
     @GetMapping("/appProp")
-    public String showPage() {
+    public String applicationPropertiesData() {
         return firstName + " " + lastName;
     }
 
-    @GetMapping("/h2Entity")
+    @GetMapping("/h2Entities")
     public List<H2Entity> getAllH2Entities() {
         return h2Service.findAll();
     }
 
-    @GetMapping("/h2Entity/{entityId}")
-    public Optional<H2Entity> getH2Entity(@PathVariable Long entityId) {
+    @GetMapping("/h2Entities/{entityId}")
+    public Optional<H2Entity> getH2Entity(@PathVariable Integer entityId) {
         return h2Service.findById(entityId);
     }
 
-    @PostMapping("/h2Entity")
+    @PostMapping("/h2Entities")
     public H2Entity saveH2Entity(@RequestBody H2Entity newH2Entity) {
         h2Service.save(newH2Entity);
         return newH2Entity;
     }
 
-    @DeleteMapping("/h2Entity/{entityId}")
-    public void deleteH2Entity(@PathVariable Long entityId) {
+    @DeleteMapping("/h2Entities/{entityId}")
+    public void deleteH2Entity(@PathVariable Integer entityId) {
         h2Service.deleteById(entityId);
     }
 }

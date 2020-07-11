@@ -33,7 +33,7 @@ public class H2ServiceImpl implements H2Service {
     }
 
     @Transactional
-    public Optional<H2Entity> findById(Long theId) {
+    public Optional<H2Entity> findById(Integer theId) {
         return h2Repository.findById(theId);
     }
 
@@ -45,7 +45,7 @@ public class H2ServiceImpl implements H2Service {
 
     @Override
     @Transactional
-    public void deleteById(Long theId) {
+    public void deleteById(Integer theId) {
         h2Repository.deleteById(theId);
     }
 }
