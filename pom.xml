@@ -46,6 +46,13 @@
 			<version>2.3.1.RELEASE</version>
 		</dependency>
 
+		<!-- ADD SUPPORT FOR IN MEMORY DB H2-->
+		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -58,6 +65,18 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- ADD SUPPORT FOR DB integrations-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
