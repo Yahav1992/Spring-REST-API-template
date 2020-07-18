@@ -1,7 +1,7 @@
 package com.example.demo.repository;
 
-import com.example.demo.model.H2Entity;
+import com.example.demo.model.User;
 import org.springframework.data.repository.CrudRepository;
 
-public interface H2Repository extends CrudRepository<H2Entity, Integer> {
+public interface H2Repository extends CrudRepository<User, Integer> {
 }

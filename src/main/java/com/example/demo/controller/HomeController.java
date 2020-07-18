@@ -1,11 +1,13 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.H2Entity;
+import com.example.demo.model.User;
 import com.example.demo.service.H2Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.login.LoginException;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,24 +36,30 @@ public class HomeController {
         return firstName + " " + lastName;
     }
 
-    @GetMapping("/h2Entities")
-    public List<H2Entity> getAllH2Entities() {
+    @GetMapping("/users")
+    public List<User> getAllUsers() {
         return h2Service.findAll();
     }
 
-    @GetMapping("/h2Entities/{entityId}")
-    public Optional<H2Entity> getH2Entity(@PathVariable Integer entityId) {
-        return h2Service.findById(entityId);
+    @GetMapping("/users/{userId}")
+    public Optional<User> getUser(@PathVariable Integer userId) {
+        return h2Service.findById(userId);
     }
 
-    @PostMapping("/h2Entities")
-    public H2Entity saveH2Entity(@RequestBody H2Entity newH2Entity) {
-        h2Service.save(newH2Entity);
-        return newH2Entity;
+    @PostMapping("/users")
+    public ResponseEntity<?> saveUser(@RequestBody User newUser) {
+        h2Service.save(newUser);
+        return ResponseEntity.ok(newUser);
     }
 
-    @DeleteMapping("/h2Entities/{entityId}")
-    public void deleteH2Entity(@PathVariable Integer entityId) {
-        h2Service.deleteById(entityId);
+    @DeleteMapping("/users/{userId}")
+    public void deleteUser(@PathVariable Integer userId) {
+        h2Service.deleteById(userId);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody User newUser) throws LoginException {
+        h2Service.login(newUser);
+        return ResponseEntity.ok(newUser);
     }
 }

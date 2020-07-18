@@ -1,19 +1,21 @@
 package com.example.demo.service;
 
-import com.example.demo.model.H2Entity;
+import com.example.demo.model.User;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.LoginException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public interface H2Service {
+    List<User> findAll();
 
-    public List<H2Entity> findAll();
+    Optional<User> findById(Integer theId);
 
-    public Optional<H2Entity> findById(Integer theId);
+    void save(User theEntity) throws RuntimeException;
 
-    public void save(H2Entity theEntity);
+    void login(User theEntity) throws LoginException;
 
-    public void deleteById(Integer theId);
+    void deleteById(Integer theId);
 }

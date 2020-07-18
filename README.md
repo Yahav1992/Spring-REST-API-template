@@ -5,8 +5,8 @@ A java spring REST API template for a quick start
 Returns a response based on endpoint:
 1) `/api/sampleString/` - generic string.
 2) `/api/appProp/` - string created from application.properties.
-3) `/api/h2Entities/` - some H2 DB sample entities created
-4) `get by id`, `post new entity`, `delete by id`
+3) `/api/users/` - some H2 DB sample users created
+4) `get users by id`, `create new users`, `delete users by id`
 
 ## Dependencies
 pom.xml dependencies includes:
@@ -16,12 +16,16 @@ pom.xml dependencies includes:
 4) `lombok` - automatically creating constructors, getters, setters, toString for a class - some additional configuration needed in intellij *
 5) `H2 DB` - In memory data base
 
-## Installations & Troubleshooting 
+## Installations, Troubleshooting & Resources 
 
-* intellij changes required for supporting devtools:
-1) settings -> build, execution, deployment -> compiler -> tick the "build project automatically" and apply.
-2) Ctrl+ Shift+A -> Registry and Enable compiler.automake.allow.when.app.running
+###### intellij changes required for supporting devtools:
+* settings -> build, execution, deployment -> compiler -> tick the "build project automatically" and apply.
+* Ctrl+ Shift+A -> Registry and Enable compiler.automake.allow.when.app.running
 
-* intellij changes required for supporting lombok:
-1) add lombok plugin
-2) [Enable annotation processing](https://www.jetbrains.com/help/idea/annotation-processors-support.html#e77a66d8)
+###### intellij changes required for supporting lombok:
+* add lombok plugin
+* [Enable annotation processing](https://www.jetbrains.com/help/idea/annotation-processors-support.html#e77a66d8)
+
+###### Resources
+* [Enabling CORS](https://spring.io/guides/gs/rest-service-cors/#global-cors-configuration)
+* [Exception Handling in Spring MVC](https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc)

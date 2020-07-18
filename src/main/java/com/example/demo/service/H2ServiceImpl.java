@@ -1,14 +1,18 @@
 package com.example.demo.service;
 
-import com.example.demo.model.H2Entity;
+import com.example.demo.model.User;
 import com.example.demo.repository.H2Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityExistsException;
+import javax.security.auth.login.LoginException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class H2ServiceImpl implements H2Service {
@@ -22,30 +26,47 @@ public class H2ServiceImpl implements H2Service {
 
     @PostConstruct
     private void setUp() {
-        h2Repository.save(new H2Entity("sample first name", "sample last name", "sample_email@email.com"));
-        h2Repository.save(new H2Entity("2nd sample first name", "2nd sample last name", "2nd_sample_email@email.com"));
+        h2Repository.save(new User("user name", "password", "sample_email@email.com"));
+        h2Repository.save(new User("2nd user name", "2nd password", "2nd_sample_email@email.com"));
     }
 
     @Override
     @Transactional
-    public List<H2Entity> findAll() {
-        return (List<H2Entity>) h2Repository.findAll();
+    public List<User> findAll() {
+        return (List<User>) h2Repository.findAll();
     }
 
     @Transactional
-    public Optional<H2Entity> findById(Integer theId) {
+    public Optional<User> findById(Integer theId) {
         return h2Repository.findById(theId);
     }
 
     @Override
     @Transactional
-    public void save(H2Entity theEntity) {
-        h2Repository.save(theEntity);
+    public void save(User theEntity) throws EntityExistsException {
+        List<User> currentUserList = this.findAll();
+        long isExists = currentUserList.stream().filter(ele -> ele.getEmail().equals(theEntity.getEmail())).count();
+        if (isExists == 0)
+            h2Repository.save(theEntity);
+        else
+            throw new EntityExistsException(theEntity.getEmail() + " Already Exists");
     }
 
     @Override
     @Transactional
     public void deleteById(Integer theId) {
         h2Repository.deleteById(theId);
+    }
+
+    @Override
+    @Transactional
+    public void login(User theEntity) throws LoginException {
+        List<User> currentUserList = this.findAll();
+        Stream<User> filteredUser = currentUserList.stream().filter(ele -> ele.getEmail().equals(theEntity.getEmail()));
+        long isExists = filteredUser.count();
+        if (isExists == 0)
+            throw new LoginException("User does not exists");
+        if (!filteredUser.collect(Collectors.toList()).get(0).getPassword().equals(theEntity.getPassword()))
+            throw new LoginException("Incorrect password");
     }
 }

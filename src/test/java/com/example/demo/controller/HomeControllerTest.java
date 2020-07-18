@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.constants.constants;
-import com.example.demo.model.H2Entity;
+import com.example.demo.model.User;
 import com.example.demo.repository.H2Repository;
 import com.example.demo.service.H2Service;
 import com.example.demo.service.H2ServiceImpl;
@@ -26,20 +26,20 @@ class HomeControllerTest {
         h2Service = new H2ServiceImpl(h2Repository);
         homeController = new HomeController(h2Service);
 
-        constants.mockMvcSampleResponse.add(constants.mockMvcApplicationPropertiesData);
-        doReturn(constants.mockMvcSampleResponse).when(h2Repository).findAll();
+        constants.MOCK_MVC_SAMPLE_RESPONSE.add(constants.MOCK_MVC_APPLICATION_PROPERTIES_DATA);
+        doReturn(constants.MOCK_MVC_SAMPLE_RESPONSE).when(h2Repository).findAll();
 
     }
 
     @Test
     void sampleString() {
-        assertEquals(constants.mockMvcSampleString, homeController.sampleString());
+        assertEquals(constants.MOCK_MVC_SAMPLE_STRING, homeController.sampleString());
     }
 
     @Test
     void getAllH2Entities() {
-        Iterable<H2Entity> result = h2Repository.findAll();
-        assertEquals(result, constants.mockMvcSampleResponse);
+        Iterable<User> result = h2Repository.findAll();
+        assertEquals(result, constants.MOCK_MVC_SAMPLE_RESPONSE);
         verify(h2Repository, times(1)).findAll();
     }
 }
