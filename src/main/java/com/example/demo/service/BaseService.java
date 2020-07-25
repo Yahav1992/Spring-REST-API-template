@@ -1,9 +1,11 @@
 package com.example.demo.service;
 
+import com.example.demo.model.ClientUser;
 import com.example.demo.model.User;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.LoginException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +15,7 @@ public interface BaseService {
 
     Optional<User> findById(Integer theId);
 
-    void save(User theEntity) throws RuntimeException;
+    ClientUser authSave(User theEntity, HttpServletRequest req) throws RuntimeException;
 
     void login(User theEntity) throws LoginException;
 

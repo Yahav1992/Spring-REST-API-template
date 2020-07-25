@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.model.AuthenticatedUser;
+import com.example.demo.model.ClientUser;
 import com.example.demo.model.User;
 import com.example.demo.repository.MongoDBRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +11,10 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import javax.security.auth.login.LoginException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Primary
 @Service("mongoS")
@@ -37,23 +39,27 @@ public class MongoServiceImpl implements BaseService {
     }
 
     @Override
-    public void save(User theEntity) throws RuntimeException {
+    public ClientUser authSave(User theEntity, HttpServletRequest req) throws RuntimeException {
         List<User> currentUserList = this.findAll();
-        long isExists = currentUserList.stream().filter(ele -> ele.getEmail().equals(theEntity.getEmail())).count();
-        if (isExists == 0)
-            mongoDBRepository.save(theEntity);
-        else
-            throw new EntityExistsException(theEntity.getEmail() + " Already Exists");
+        long isExists = currentUserList.stream().filter(ele -> ele.getUserName().equals(theEntity.getUserName())).count();
+        if (isExists == 0) {
+            // TODO: change to OAuth2 authentication
+            AuthenticatedUser authenticatedEntity = new AuthenticatedUser(theEntity);
+            AuthenticatedUser savedUser = mongoDBRepository.save(authenticatedEntity);
+            return new ClientUser(savedUser);
+        } else
+            throw new EntityExistsException(theEntity.getUserName() + " Already Exists");
     }
 
     @Override
     public void login(User theEntity) throws LoginException {
         List<User> currentUserList = this.findAll();
-        Stream<User> filteredUser = currentUserList.stream().filter(ele -> ele.getUserName().equals(theEntity.getUserName()));
-        long isExists = filteredUser.count();
-        if (isExists == 0)
+        List<User> filteredUser = currentUserList.stream().filter(ele -> ele.getUserName().equals(theEntity.getUserName())).collect(Collectors.toList());
+
+        if (filteredUser.size() == 0)
             throw new LoginException("User does not exists");
-        if (!filteredUser.collect(Collectors.toList()).get(0).getPassword().equals(theEntity.getPassword()))
+
+        if (!filteredUser.get(0).getPassword().equals(theEntity.getPassword()))
             throw new LoginException("Incorrect password");
     }
 

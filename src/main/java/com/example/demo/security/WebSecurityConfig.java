@@ -1,6 +1,8 @@
 package com.example.demo.security;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -11,8 +13,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Collections;
 
 /* this class created to be able to make data-changing requests (POST, PUT, DELETE) while having spring-security enabled.
-*  it basically disables csrf Protection because it is enabled by default in spring security.
-* */
+ *  it basically disables csrf Protection because it is enabled by default in spring security.
+ * */
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 

@@ -5,14 +5,18 @@ import com.example.demo.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.login.LoginException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 public class HomeController {
 
     @Value("${prop1.firstname}")
@@ -49,9 +53,8 @@ public class HomeController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<?> saveUser(@RequestBody User newUser) {
-        baseService.save(newUser);
-        return ResponseEntity.ok(newUser);
+    public ResponseEntity<?> saveUser(@RequestBody User newUser, HttpServletRequest req) {
+        return ResponseEntity.ok(baseService.authSave(newUser, req));
     }
 
     @DeleteMapping("/users/{userId}")
