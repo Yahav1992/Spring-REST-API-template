@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public interface H2Service {
+public interface BaseService {
     List<User> findAll();
 
     Optional<User> findById(Integer theId);

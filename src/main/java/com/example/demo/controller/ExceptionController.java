@@ -20,7 +20,6 @@ import java.sql.SQLException;
 @ControllerAdvice
 public class ExceptionController extends ResponseEntityExceptionHandler {
 
-
     @ExceptionHandler(EntityNotFoundException.class)
     protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex) {
         return buildResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
@@ -41,7 +40,6 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
         return buildResponseEntity(ex.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
     }
 
-
     @ExceptionHandler(Exception.class)
     public ModelAndView handleError(HttpServletRequest req, Exception ex) {
         ModelAndView mav = new ModelAndView();
@@ -54,5 +52,4 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     private ResponseEntity<Object> buildResponseEntity(String error, HttpStatus errorCode) {
         return new ResponseEntity<>(error, errorCode);
     }
-
 }

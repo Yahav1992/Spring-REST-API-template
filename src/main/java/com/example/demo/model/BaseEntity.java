@@ -10,5 +10,5 @@ import javax.persistence.*;
 public abstract class BaseEntity {
     @Id
     @GeneratedValue
-    private Integer id;
+    private String id;
 }

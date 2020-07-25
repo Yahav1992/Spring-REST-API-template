@@ -1,8 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.User;
-import com.example.demo.service.H2Service;
+import com.example.demo.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +20,12 @@ public class HomeController {
     @Value("${prop1.lastname}")
     private String lastName;
 
-    private final H2Service h2Service;
+    @Qualifier(value = "mongoS")
+    private final BaseService baseService;
 
     @Autowired
-    public HomeController(H2Service h2Service) {
-        this.h2Service = h2Service;
+    public HomeController(BaseService baseService) {
+        this.baseService = baseService;
     }
 
     @GetMapping("/sampleString")
@@ -38,28 +40,28 @@ public class HomeController {
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
-        return h2Service.findAll();
+        return baseService.findAll();
     }
 
     @GetMapping("/users/{userId}")
     public Optional<User> getUser(@PathVariable Integer userId) {
-        return h2Service.findById(userId);
+        return baseService.findById(userId);
     }
 
     @PostMapping("/users")
     public ResponseEntity<?> saveUser(@RequestBody User newUser) {
-        h2Service.save(newUser);
+        baseService.save(newUser);
         return ResponseEntity.ok(newUser);
     }
 
     @DeleteMapping("/users/{userId}")
     public void deleteUser(@PathVariable Integer userId) {
-        h2Service.deleteById(userId);
+        baseService.deleteById(userId);
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User newUser) throws LoginException {
-        h2Service.login(newUser);
+        baseService.login(newUser);
         return ResponseEntity.ok(newUser);
     }
 }

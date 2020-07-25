@@ -3,7 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.constants.constants;
 import com.example.demo.model.User;
 import com.example.demo.repository.H2Repository;
-import com.example.demo.service.H2Service;
+import com.example.demo.service.BaseService;
 import com.example.demo.service.H2ServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,15 +16,15 @@ import static org.mockito.Mockito.*;
 class HomeControllerTest {
 
     private static HomeController homeController;
-    private static H2Service h2Service;
+    private static BaseService baseService;
     @Mock // testing using mock mvc on the repository.
     private static H2Repository h2Repository;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        h2Service = new H2ServiceImpl(h2Repository);
-        homeController = new HomeController(h2Service);
+        baseService = new H2ServiceImpl(h2Repository);
+        homeController = new HomeController(baseService);
 
         constants.MOCK_MVC_SAMPLE_RESPONSE.add(constants.MOCK_MVC_APPLICATION_PROPERTIES_DATA);
         doReturn(constants.MOCK_MVC_SAMPLE_RESPONSE).when(h2Repository).findAll();

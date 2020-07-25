@@ -18,7 +18,7 @@ class UserTest {
     @Test
     @Order(1)
     void getFirst() {
-        assertEquals(constants.INITIAL_NAME, entity.getName());
+        assertEquals(constants.INITIAL_NAME, entity.getUserName());
     }
 
     @Test
@@ -36,8 +36,8 @@ class UserTest {
     @Test
     @Order(4)
     public void setFirst() {
-        entity.setName(constants.UNIT_TESTS_NAME);
-        assertEquals(constants.UNIT_TESTS_NAME, entity.getName());
+        entity.setUserName(constants.UNIT_TESTS_NAME);
+        assertEquals(constants.UNIT_TESTS_NAME, entity.getUserName());
     }
 
     @Test
