@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import com.example.demo.constants.constants;
+import com.example.demo.model.user.User;
 import org.junit.jupiter.api.*;
 
 import static junit.framework.TestCase.assertEquals;

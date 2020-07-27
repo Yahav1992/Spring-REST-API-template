@@ -1,8 +1,8 @@
 package com.example.demo.repository;
 
-import com.example.demo.model.User;
+import com.example.demo.model.user.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MongoDBRepository extends MongoRepository<User, String> { }
+public interface MongoDBUserRepository extends MongoRepository<User, String> { }

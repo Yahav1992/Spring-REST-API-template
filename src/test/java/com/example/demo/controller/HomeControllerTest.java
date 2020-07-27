@@ -1,8 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.constants.constants;
-import com.example.demo.model.User;
-import com.example.demo.repository.MongoDBRepository;
+import com.example.demo.model.user.User;
+import com.example.demo.repository.MongoDBGymClassRepository;
+import com.example.demo.repository.MongoDBUserRepository;
 import com.example.demo.service.BaseService;
 import com.example.demo.service.MongoServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,12 +18,14 @@ class HomeControllerTest {
 
     private static HomeController homeController;
     @Mock // testing using mock mvc on the repository.
-    private static MongoDBRepository mongoRepo;
+    private static MongoDBUserRepository mongoRepo;
+    @Mock // testing using mock mvc on the repository.
+    private static MongoDBGymClassRepository mongoGymRepo;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        BaseService baseService = new MongoServiceImpl(mongoRepo);
+        BaseService baseService = new MongoServiceImpl(mongoRepo, mongoGymRepo);
         homeController = new HomeController(baseService);
 
         constants.MOCK_MVC_SAMPLE_RESPONSE.add(constants.MOCK_MVC_APPLICATION_PROPERTIES_DATA);

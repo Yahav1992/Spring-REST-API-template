@@ -1,6 +1,6 @@
 package com.example.demo.constants;
 
-import com.example.demo.model.User;
+import com.example.demo.model.user.User;
 
 import java.util.ArrayList;
 import java.util.HashSet;

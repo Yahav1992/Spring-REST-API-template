@@ -1,41 +1,61 @@
 package com.example.demo.service;
 
-import com.example.demo.model.AuthenticatedUser;
-import com.example.demo.model.ClientUser;
-import com.example.demo.model.User;
-import com.example.demo.repository.MongoDBRepository;
+import com.example.demo.model.gym.GymClass;
+import com.example.demo.model.user.AuthenticatedUser;
+import com.example.demo.model.user.ClientUser;
+import com.example.demo.model.user.User;
+import com.example.demo.repository.MongoDBGymClassRepository;
+import com.example.demo.repository.MongoDBUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.persistence.EntityExistsException;
 import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Primary
 @Service("mongoS")
-@EnableJpaRepositories("com.example.demo.repository.MongoDBRepository")
+@EnableJpaRepositories({"com.example.demo.repository.MongoDBUserRepository", "com.example.demo.repository.MongoDBUserRepository"})
 public class MongoServiceImpl implements BaseService {
 
-    private final MongoDBRepository mongoDBRepository;
+    private final MongoDBUserRepository mongoDBUserRepository;
+    private final MongoDBGymClassRepository mongoDBGymClassRepository;
 
     @Autowired
-    public MongoServiceImpl(MongoDBRepository mongoDBRepository) {
-        this.mongoDBRepository = mongoDBRepository;
+    public MongoServiceImpl(MongoDBUserRepository mongoDBUserRepository, MongoDBGymClassRepository mongoDBGymClassRepository) {
+        this.mongoDBUserRepository = mongoDBUserRepository;
+        this.mongoDBGymClassRepository = mongoDBGymClassRepository;
     }
+
+    @PostConstruct
+    private void setUp() {
+        mongoDBUserRepository.save(new AuthenticatedUser(new User("test", "123", "test@gmail.com")));
+        mongoDBGymClassRepository.save(new GymClass("Boxing", "Boxing sparring session with Tyson Fury", 499.99, Duration.ofHours(1), 1, "Tyson Fury"));
+    }
+
+    @PreDestroy
+    private void finishUp() {
+        mongoDBUserRepository.deleteAll();
+        mongoDBGymClassRepository.deleteAll();
+    }
+
 
     @Override
     public List<User> findAll() {
-        return mongoDBRepository.findAll();
+        return mongoDBUserRepository.findAll();
     }
 
     @Override
     public Optional<User> findById(Integer theId) {
-        return mongoDBRepository.findById(theId.toString());
+        return mongoDBUserRepository.findById(theId.toString());
     }
 
     @Override
@@ -45,7 +65,7 @@ public class MongoServiceImpl implements BaseService {
         if (isExists == 0) {
             // TODO: change to OAuth2 authentication
             AuthenticatedUser authenticatedEntity = new AuthenticatedUser(theEntity);
-            AuthenticatedUser savedUser = mongoDBRepository.save(authenticatedEntity);
+            AuthenticatedUser savedUser = mongoDBUserRepository.save(authenticatedEntity);
             return new ClientUser(savedUser);
         } else
             throw new EntityExistsException(theEntity.getUserName() + " Already Exists");
@@ -65,7 +85,7 @@ public class MongoServiceImpl implements BaseService {
 
     @Override
     public void deleteById(Integer theId) {
-        mongoDBRepository.deleteById(theId.toString());
+        mongoDBUserRepository.deleteById(theId.toString());
     }
 }
 

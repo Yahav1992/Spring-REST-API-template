@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.model.ClientUser;
-import com.example.demo.model.User;
+import com.example.demo.model.user.ClientUser;
+import com.example.demo.model.user.User;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.LoginException;
