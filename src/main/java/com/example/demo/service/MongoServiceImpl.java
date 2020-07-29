@@ -39,14 +39,15 @@ public class MongoServiceImpl implements BaseService {
     private void setUp() {
         mongoDBUserRepository.save(new AuthenticatedUser(new User("test", "123", "test@gmail.com")));
         mongoDBGymClassRepository.save(new GymClass("Boxing", "Boxing sparring session with Tyson Fury", 499.99, Duration.ofHours(1), 1, "Tyson Fury"));
+        mongoDBGymClassRepository.save(new GymClass("Jiu-Jitsu", "Jiu-Jitsu session with GSP", 399.99, Duration.ofHours(2), 2, "Georges St-Pierre"));
+        mongoDBGymClassRepository.save(new GymClass("Tapping out", "Tapping out session with Connor McGregor", 299.99, Duration.ofMinutes(45), 3, "Connor McGregor"));
     }
 
     @PreDestroy
-    private void finishUp() {
+    private void shutdown() {
         mongoDBUserRepository.deleteAll();
         mongoDBGymClassRepository.deleteAll();
     }
-
 
     @Override
     public List<User> findAll() {
@@ -86,6 +87,10 @@ public class MongoServiceImpl implements BaseService {
     @Override
     public void deleteById(Integer theId) {
         mongoDBUserRepository.deleteById(theId.toString());
+    }
+
+    public List<GymClass> findAllCourses() {
+        return mongoDBGymClassRepository.findAll();
     }
 }
 

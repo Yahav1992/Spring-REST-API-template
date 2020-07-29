@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.gym.GymClass;
 import com.example.demo.model.user.User;
 import com.example.demo.service.BaseService;
+import com.example.demo.service.MongoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -67,4 +69,10 @@ public class HomeController {
         baseService.login(newUser);
         return ResponseEntity.ok(newUser);
     }
+
+    @GetMapping("/courses")
+    public List<GymClass> getAllCourses() {
+        return ((MongoServiceImpl) baseService).findAllCourses();
+    }
+
 }
