@@ -13,11 +13,11 @@ import java.util.Optional;
 public interface BaseService {
     List<User> findAll();
 
-    Optional<User> findById(Integer theId);
+    Optional<User> findById(String theId);
 
     ClientUser authSave(User theEntity, HttpServletRequest req) throws RuntimeException;
 
     void login(User theEntity) throws LoginException;
 
-    void deleteById(Integer theId);
+    void deleteById(String theId);
 }

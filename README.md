@@ -12,9 +12,9 @@ Returns a response based on endpoint:
 pom.xml dependencies includes:
 1) `actuator` - some free endpoints for system description
 2) `security` - protection to endpoints, user & password required
-3) `devtools` - hot-load when changes are saved, no restart required - some additional configuration needed in intellij *
+3) `devtools` - hot-load when saving changes, no restart required - some additional configuration needed in intellij *
 4) `lombok` - automatically creating constructors, getters, setters, toString for a class - some additional configuration needed in intellij *
-5) `H2 DB` - In memory data base
+5) `Atlas mongodb` - using cloud mongodb to store users and courses data.
 
 ## Installations, Troubleshooting & Resources 
 

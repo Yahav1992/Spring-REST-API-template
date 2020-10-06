@@ -55,8 +55,8 @@ public class MongoServiceImpl implements BaseService {
     }
 
     @Override
-    public Optional<User> findById(Integer theId) {
-        return mongoDBUserRepository.findById(theId.toString());
+    public Optional<User> findById(String theId) {
+        return mongoDBUserRepository.findById(theId);
     }
 
     @Override
@@ -85,8 +85,8 @@ public class MongoServiceImpl implements BaseService {
     }
 
     @Override
-    public void deleteById(Integer theId) {
-        mongoDBUserRepository.deleteById(theId.toString());
+    public void deleteById(String theId) {
+        mongoDBUserRepository.deleteById(theId);
     }
 
     public List<GymClass> findAllCourses() {

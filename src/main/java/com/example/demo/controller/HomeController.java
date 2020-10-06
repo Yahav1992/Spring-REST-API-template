@@ -50,7 +50,7 @@ public class HomeController {
     }
 
     @GetMapping("/users/{userId}")
-    public Optional<User> getUser(@PathVariable Integer userId) {
+    public Optional<User> getUser(@PathVariable String userId) {
         return baseService.findById(userId);
     }
 
@@ -60,7 +60,7 @@ public class HomeController {
     }
 
     @DeleteMapping("/users/{userId}")
-    public void deleteUser(@PathVariable Integer userId) {
+    public void deleteUser(@PathVariable String userId) {
         baseService.deleteById(userId);
     }
 
@@ -74,5 +74,4 @@ public class HomeController {
     public List<GymClass> getAllCourses() {
         return ((MongoServiceImpl) baseService).findAllCourses();
     }
-
 }
